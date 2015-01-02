@@ -9,7 +9,7 @@
     },
     "license": "Apache 2",
     "autoload": {
-        "psr-4": {"Peekmo\\Story\\": "/"}
+        "psr-4": {"Peekmo\\Story\\": "src/"}
     },
     "authors": [
         {
