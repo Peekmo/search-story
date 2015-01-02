@@ -8,6 +8,9 @@
         "phpunit/phpunit": "4.4.1"
     },
     "license": "Apache 2",
+    "autoload": {
+        "psr-4": {"Peekmo\\Story\\": "/"}
+    },
     "authors": [
         {
             "name": "Peekmo",

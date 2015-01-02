@@ -1,6 +1,9 @@
 <?php
 
- namespace Interfaces;
+ /**
+ * @author Axel Anceau <Peekmo>
+ */
+ namespace Peekmo\Story\Interfaces;
 
  /**
   * Interface called to analyze the group of words to add to the sentence.

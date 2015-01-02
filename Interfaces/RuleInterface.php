@@ -1,7 +1,10 @@
 <?php
 
-namespace Interfaces;
-
+/**
+ * @author Axel Anceau <Peekmo>
+ */
+ namespace Peekmo\Story\Interfaces;
+ 
 /**
 * Interface called to check if the words are authorized in the sentence
 *
