@@ -17,7 +17,7 @@ interface ParserInterface
      * @param  array  $params Additional parameters for the search (like page, lang etc..)
      * @return string Data from the remote search engine
      */
-    public function get($query, array $params);
+    public function get($query, array $params = array());
 
     /**
      * Parse data fetched with get() method
