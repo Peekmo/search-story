@@ -25,7 +25,7 @@
  }
 
  $runner = new Runner($config);
- $runner->run("Il était une fois", array('lang' => 'fr'));
+ $runner->run("Tout commence en", 300, array('lang' => 'fr'));
 
  // $console = new Application();
  // $console->run();

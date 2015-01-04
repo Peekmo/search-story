@@ -30,7 +30,7 @@ class GoogleParser implements ParserInterface
     public function get($query, array $params = array())
     {
         $lang = isset($params['lang']) ? $params['lang'] : 'fr';
-        $result = file_get_contents(sprintf('%s/search?q=%s', $this->urls[$lang], urlencode('"' . $query . '"')));
+        $result = file_get_contents(sprintf('%s/search?q=%s', $this->urls[$lang], '"' . urlencode($query) . '"'));
 
         return $result;
     }
@@ -56,7 +56,7 @@ class GoogleParser implements ParserInterface
                 $next = substr($clean, $pos + strlen($query));
                 $exWords = explode(' ', trim($next));
 
-                $words[] = implode(' ', array_chunk($exWords, 3)[0]);
+                $words[] = implode(' ', array_chunk($exWords, 4)[0]);
             }
         }
 

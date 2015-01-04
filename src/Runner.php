@@ -62,10 +62,32 @@ class Runner
         }
     }
 
-    public function run($query, $params)
+    public function run($query, $words, $params)
     {
-        echo $query . ' ';
+        $text = $query;
+        echo $text;
+        while(str_word_count($text) < $words) {
+            $value = '';
+            while ('' === $value = $this->execute($query, $params)) {
+                $exWords = explode(' ', $query);
+                array_shift($exWords);
+                $query = implode(' ', $exWords);
+            }
 
+            $text .= ' ' . $value;
+            $query = $value;
+            echo ' ' . $value;
+        }
+    }
+
+    /**
+     * Executes a search
+     * @param string $query  Words searched
+     * @param array  $params Search parameters
+     * @return string
+     */
+    private function execute($query, $params)
+    {
         $words = array();
         foreach ($this->parsers as $parser) {
             $result = $parser->get($query, $params);
@@ -94,6 +116,11 @@ class Runner
             }
         }
 
-        $this->run($finalWords[0], $params);
+        if (empty($finalWords)) {
+            return '';
+        }
+
+        $index = rand(0, count($finalWords)-1);
+        return $finalWords[$index];
     }
 }
