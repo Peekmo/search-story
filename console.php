@@ -25,7 +25,7 @@
  }
 
  $runner = new Runner($config);
- $runner->run();
+ $runner->run("Il était une fois", array('lang' => 'fr'));
 
  // $console = new Application();
  // $console->run();

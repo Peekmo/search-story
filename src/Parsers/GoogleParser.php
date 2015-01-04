@@ -10,6 +10,18 @@ use Peekmo\Story\Interfaces\ParserInterface;
 class GoogleParser implements ParserInterface
 {
     /**
+     * @var array Urls for google, by language
+     */
+    protected $urls;
+
+    public function __construct()
+    {
+        $this->urls = array(
+            'fr' => 'http://www.google.fr'
+        );
+    }
+
+    /**
     * Get data from the remote application, following the given query string
     * @param  string $query  Last words searched
     * @param  array  $params Additional parameters for the search (like page, lang etc..)
@@ -17,7 +29,10 @@ class GoogleParser implements ParserInterface
     */
     public function get($query, array $params = array())
     {
+        $lang = isset($params['lang']) ? $params['lang'] : 'fr';
+        $result = file_get_contents(sprintf('%s/search?q=%s', $this->urls[$lang], urlencode('"' . $query . '"')));
 
+        return $result;
     }
 
     /**
@@ -27,6 +42,16 @@ class GoogleParser implements ParserInterface
     */
     public function parse($data)
     {
+        $data = utf8_encode($data);
+        $elements = explode('<span class="st">', $data);
+        array_shift($elements); // Removing the first elements (not interesting)
 
+        $words = [];
+        foreach ($elements as $element) {
+            $sentence = substr($element, 0, strpos($element, '</span>') + 1);
+            $words[] = html_entity_decode(strip_tags($sentence));
+        }
+
+        die(print_r($words));
     }
 }

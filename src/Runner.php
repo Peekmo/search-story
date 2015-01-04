@@ -62,8 +62,13 @@ class Runner
         }
     }
 
-    public function run()
+    public function run($query, $params)
     {
-        die('ok');
+        $words = array();
+        foreach ($this->parsers as $parser) {
+            $result = $parser->get($query, $params);
+
+            $words = array_merge($words, $parser->parse($result));
+        }
     }
 }
