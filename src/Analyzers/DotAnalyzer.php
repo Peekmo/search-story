@@ -5,6 +5,8 @@
 */
 namespace Peekmo\Story\Analyzers;
 
+use Peekmo\Story\Interfaces\AnalyzerInterface;
+
 class DotAnalyzer implements AnalyzerInterface
 {
     /**

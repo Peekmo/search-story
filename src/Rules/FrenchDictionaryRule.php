@@ -5,6 +5,8 @@
 */
 namespace Peekmo\Story\Rules;
 
+use Peekmo\Story\Interfaces\RuleInterface;
+
 class FrenchDictionaryRule implements RuleInterface
 {
     /**
@@ -19,6 +21,6 @@ class FrenchDictionaryRule implements RuleInterface
     */
     public function authorized($sentence, $words)
     {
-
+        return true;
     }
 }

@@ -5,8 +5,27 @@
  */
  require_once('vendor/autoload.php');
 
- use Symfony\Component\Console\Application;
- use Peekmo\Story\Interfaces\RuleInterface;
+ require_once('config/app.php');
+ require_once('config/config.php');
 
- $console = new Application();
- $console->run();
+ use Symfony\Component\Console\Application;
+ use Peekmo\Story\Config;
+ use Peekmo\Story\Runner;
+
+ foreach($parsers as $name => $infos) {
+     Config::add('parser', $name, $infos['description'], $infos['namespace']);
+ }
+
+ foreach($analyzers as $name => $infos) {
+     Config::add('analyzer', $name, $infos['description'], $infos['namespace']);
+ }
+
+ foreach($rules as $name => $infos) {
+     Config::add('rule', $name, $infos['description'], $infos['namespace']);
+ }
+
+ $runner = new Runner($config);
+ $runner->run();
+
+ // $console = new Application();
+ // $console->run();

@@ -5,7 +5,9 @@
 */
 namespace Peekmo\Story\Rules;
 
-class SpecialCharactersRule implements RuleInterface
+use Peekmo\Story\Interfaces\RuleInterface;
+
+class LettersAndDigitsRule implements RuleInterface
 {
     /**
     * Interface called to check if the words are authorized in the sentence
@@ -19,6 +21,6 @@ class SpecialCharactersRule implements RuleInterface
     */
     public function authorized($sentence, $words)
     {
-
+        return true;
     }
 }

@@ -3,7 +3,9 @@
 /**
 * @author Axel Anceau <Peekmo>
 */
-namespace Peekmo\Story\Persers;
+namespace Peekmo\Story\Parsers;
+
+use Peekmo\Story\Interfaces\ParserInterface;
 
 class GoogleParser implements ParserInterface
 {
@@ -25,6 +27,6 @@ class GoogleParser implements ParserInterface
     */
     public function parse($data)
     {
-        
+
     }
 }
