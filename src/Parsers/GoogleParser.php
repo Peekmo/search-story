@@ -37,10 +37,11 @@ class GoogleParser implements ParserInterface
 
     /**
     * Parse data fetched with get() method
-    * @param string $data Data from the remote search engine
+    * @param string $query Last words searched
+    * @param string $data  Data from the remote search engine
     * @return array Suggestions found by the parsing
     */
-    public function parse($data)
+    public function parse($query, $data)
     {
         $data = utf8_encode($data);
         $elements = explode('<span class="st">', $data);
@@ -49,9 +50,16 @@ class GoogleParser implements ParserInterface
         $words = [];
         foreach ($elements as $element) {
             $sentence = substr($element, 0, strpos($element, '</span>') + 1);
-            $words[] = html_entity_decode(strip_tags($sentence));
+            $clean = html_entity_decode(strip_tags($sentence));
+
+            if (false !== $pos = strpos($clean, $query)) {
+                $next = substr($clean, $pos + strlen($query));
+                $exWords = explode(' ', trim($next));
+
+                $words[] = implode(' ', array_chunk($exWords, 4)[0]);
+            }
         }
 
-        die(print_r($words));
+        return $words;
     }
 }

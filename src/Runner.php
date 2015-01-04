@@ -19,17 +19,17 @@ class Runner
     /**
      * @var ParserInterface[]
      */
-    protected $parsers;
+    protected $parsers = [];
 
     /**
      * @var AnalyzerInterface[]
      */
-    protected $analyzers;
+    protected $analyzers = [];
 
     /**
      * @var RuleInterface[]
      */
-    protected $rules;
+    protected $rules = [];
 
     /**
      * Initialize rules, parsers & analyzers containers
@@ -52,7 +52,7 @@ class Runner
                             $this->analyzers[] = new $class();
                             break;
                         case 'rule':
-                            $this->rule[] = new $class();
+                            $this->rules[] = new $class();
                             break;
                         default:
                             throw new \InvalidArgumentException(sprintf('Unknow %s type', $type));
@@ -64,11 +64,30 @@ class Runner
 
     public function run($query, $params)
     {
+        echo $query . ' ';
+
         $words = array();
         foreach ($this->parsers as $parser) {
             $result = $parser->get($query, $params);
 
-            $words = array_merge($words, $parser->parse($result));
+            $words = array_merge($words, $parser->parse($query, $result));
         }
+
+        $finalWords = array();
+        foreach ($words as $word) {
+            // Analyzers on words
+            foreach ($this->analyzers as $analyzer) {
+                $analyzer->analyze($query, $word);
+            }
+
+            // Applying rules to words
+            foreach ($this->rules as $rule) {
+                if ($rule->authorized($query, $word)) {
+                    $finalWords[] = $word;
+                }
+            }
+        }
+
+        $this->run($finalWords[0], $params);
     }
 }

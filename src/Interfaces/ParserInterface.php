@@ -21,8 +21,9 @@ interface ParserInterface
 
     /**
      * Parse data fetched with get() method
-     * @param string $data Data from the remote search engine
+     * @param string $query Last words searched
+     * @param string $data  Data from the remote search engine
      * @return array Suggestions found by the parsing
      */
-    public function parse($data);
+    public function parse($query, $data);
 }
