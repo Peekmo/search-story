@@ -56,7 +56,7 @@ class GoogleParser implements ParserInterface
                 $next = substr($clean, $pos + strlen($query));
                 $exWords = explode(' ', trim($next));
 
-                $words[] = implode(' ', array_chunk($exWords, 4)[0]);
+                $words[] = implode(' ', array_chunk($exWords, 3)[0]);
             }
         }
 

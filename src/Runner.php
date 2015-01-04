@@ -81,10 +81,16 @@ class Runner
             }
 
             // Applying rules to words
+            $authorized = true;
             foreach ($this->rules as $rule) {
-                if ($rule->authorized($query, $word)) {
-                    $finalWords[] = $word;
+                if (!$rule->authorized($query, $word)) {
+                    $authorized = false;
+                    break;
                 }
+            }
+
+            if ($authorized) {
+                $finalWords[] = $word;
             }
         }
 
