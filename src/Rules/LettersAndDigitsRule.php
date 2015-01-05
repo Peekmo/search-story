@@ -21,6 +21,6 @@ class LettersAndDigitsRule implements RuleInterface
     */
     public function authorized($sentence, $words)
     {
-        return 0 !== preg_match('/^([a-zA-Z \.,_-])+$/i', $words);
+        return 0 !== preg_match('/^([a-zA-Z \.,_-éèêîïûôë])+$/i', $words);
     }
 }

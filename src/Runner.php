@@ -75,7 +75,14 @@ class Runner
             }
 
             $text .= ' ' . $value;
-            $query = $value;
+
+            $sub = explode(' ', substr($text, strlen($text) < 100 ? 0 : strlen($text)-100));
+            $query = '';
+            for ($i=0; $i<3; $i++) {
+                $query = array_pop($sub) . ' ' . $query;
+            }
+
+            $query = str_replace(['.',',',';','...'], '', $query);
             echo ' ' . $value;
         }
     }

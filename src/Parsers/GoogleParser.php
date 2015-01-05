@@ -30,8 +30,18 @@ class GoogleParser implements ParserInterface
     public function get($query, array $params = array())
     {
         $lang = isset($params['lang']) ? $params['lang'] : 'fr';
-        $result = file_get_contents(sprintf('%s/search?q=%s', $this->urls[$lang], '"' . urlencode($query) . '"'));
+        $options = array(
+            'http'=>array(
+                'method'=>"GET",
+                'header'=>"Accept-language: en\r\n" .
+                "User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21\r\n"
+            )
+        );
 
+        $context = stream_context_create($options);
+        $result = file_get_contents(sprintf('%s/search?q=%s', $this->urls[$lang], urlencode('"' . $query . '"')), false, $context);
+
+        sleep(1);
         return $result;
     }
 
@@ -50,7 +60,7 @@ class GoogleParser implements ParserInterface
         $words = [];
         foreach ($elements as $element) {
             $sentence = substr($element, 0, strpos($element, '</span>') + 1);
-            $clean = html_entity_decode(strip_tags($sentence));
+            $clean = html_entity_decode(utf8_decode(strip_tags($sentence)), ENT_QUOTES);
 
             if (false !== $pos = strpos($clean, $query)) {
                 $next = substr($clean, $pos + strlen($query));
