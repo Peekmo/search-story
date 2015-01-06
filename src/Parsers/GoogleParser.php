@@ -39,7 +39,7 @@ class GoogleParser implements ParserInterface
         );
 
         $context = stream_context_create($options);
-        $result = file_get_contents(sprintf('%s/search?q=%s', $this->urls[$lang], urlencode('"' . $query . '"')), false, $context);
+        $result = file_get_contents(sprintf('%s/search?q=%s&lr=lang_', $this->urls[$lang], urlencode('"' . $query . '"'), $lang), false, $context);
 
         sleep(1);
         return $result;

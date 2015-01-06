@@ -69,7 +69,7 @@ class Runner
         while(str_word_count($text) < $words) {
             $value = '';
             while ('' === $value = $this->execute($query, $params)) {
-                $exWords = explode(' ', $query);
+                $exWords = explode(' ', trim($query));
                 array_shift($exWords);
                 $query = implode(' ', $exWords);
             }
@@ -82,7 +82,7 @@ class Runner
                 $query = array_pop($sub) . ' ' . $query;
             }
 
-            $query = str_replace(['.',',',';','...'], '', $query);
+            $query = trim(str_replace(['.',',',';','...'], '', $query));
             echo ' ' . $value;
         }
     }
