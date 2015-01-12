@@ -43,19 +43,12 @@ class Runner
 
                 if (!empty($data)) {
                     $class = $data['class'];
-
-                    switch ($type) {
-                        case 'parser':
-                            $this->parsers[] = new $class();
-                            break;
-                        case 'analyzer':
-                            $this->analyzers[] = new $class();
-                            break;
-                        case 'rule':
-                            $this->rules[] = new $class();
-                            break;
-                        default:
-                            throw new \InvalidArgumentException(sprintf('Unknow %s type', $type));
+                    $nameType = $type . 's';
+                    
+                    if (isset($this->$nameType)) {
+                        array_push($this->$nameType, new $class());
+                    } else {
+                        throw new \InvalidArgumentException(sprintf('Unknow %s type', $type));
                     }
                 }
             }
